@@ -42,8 +42,11 @@ export class TopDown extends Phaser.Scene
         this.npc = this.physics.add.sprite(150, 150, 'boar');
         this.npc.setScale(2);
 
-        const zone = this.add.sprite()
-
+        const zone = this.add.zone(this.player.x, this.player.y, 25, 50);
+        zone.setOrigin(0.5, 0);
+        
+        const debugRect = this.add.rectangle(0, 0, zone.width, zone.height, 0x00ff00, 0.3);
+        Phaser.Display.Align.In.TopLeft(debugRect, zone);
 
     }
 
@@ -66,7 +69,6 @@ export class TopDown extends Phaser.Scene
         instead of letting one direction win out. The way this works mathmatically is that if one key is held
         it either adds/subtracts to the velocity, and if the opposite key is held it would do cancel out by
         appropriately adding/subtracting it to 0! Math!*/
-
         if (this.cursors.left.isDown || this.wasd.left.isDown) {
             playerVelocityX -= playerSpeed;
         }
@@ -84,7 +86,7 @@ export class TopDown extends Phaser.Scene
 
         /*This line actually sets the player's velocity to the player object in the scene instance. The
         setVelocity() is a method that...sets the velocity based on what we passed through it, in this
-        case the variables we established above after they get increased or decreased*/
+        case the variables we established above after they get increased or decreased.*/
         this.player.setVelocity(playerVelocityX, playerVelocityY);
 
         /*Okay so this one is a check to see if playerVelocity on either directions is NOT 0 first. This
