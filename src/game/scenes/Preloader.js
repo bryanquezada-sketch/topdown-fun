@@ -33,6 +33,14 @@ export class Preloader extends Scene
         this.load.setPath('assets');
 
         this.load.image('logo', 'logo.png');
+
+        this.load.image('boar', 'assets/boarSprite.png');
+        this.load.image('hero', 'assets/goblinHero.png');
+        this.load.spritesheet('meat', 'assets/meatTileset.png', {
+            frameWidth: 32,
+            frameHeight: 32,
+            endFrame: 0,
+        });
     }
 
     create ()
@@ -41,6 +49,6 @@ export class Preloader extends Scene
         //  For example, you can define global animations here, so we can use them in other scenes.
 
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        this.scene.start('MainMenu');
+        this.scene.start('TopDown'); 
     }
 }
