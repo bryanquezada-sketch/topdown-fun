@@ -43,37 +43,41 @@ export class TopDown extends Phaser.Scene
     //Part of the Phaser Life Cycle, loops roughly 60 times/second
     update ()
     {
-        /* We define player speed at 160(standard for Phaser probably because it feels just
-        right). The reason for this is that it helps later on so we don't have to repeat
-        ourselves twice when we set up the movement logic. I can also see it being useful
-        if we ever want to have an instance where the player speed is changed like sprinting,
-        jumping or moving through rough terrain. We set the player's velocity to 0 in the next
-        line because we need a way to stop the player after the movement logic starts. The
-        reason this works is because it's in the update() method and thus loops around as 
-        one of the first things that gets checked for.*/
+        /*First we define the player speed, in this case 160(A Phaser standard, and I can see why, it feels
+        pretty good!), we create adjustable variables to start at 0 so when the update() method loops around the
+        player actually stops if he's not pressing anything, effectively a reset for both X and Y velocity.*/
         const playerSpeed = 160;
-        this.player.setVelocity(0);
+        let playerVelocityX = 0;
+        let playerVelocityY = 0;
 
-        /* The movement logic! This is pretty straightforward, if the keys from the cursor or
-        wasd objects(which we defined earlier) are being pressed down, it changes the player's
-        (who we also defined earlier) velocity based on which key is being pressed by the 
-        variable playerSpeed(set at 160), either adding or subtracting to it.*/
-        if (this.cursors.up.isDown || this.wasd.up.isDown) {
-            this.player.setVelocityY(-playerSpeed);
-        } else if (this.cursors.down.isDown || this.wasd.down.isDown) {
-            this.player.setVelocityY(+playerSpeed);
-        };
-
-        /*The reason you separate horizontal and veritcal movement is so that both could be
-        true at the same time for diagonal movement. Up and down will never be true at the
-        same time and neither will left and right. Else if is used to decide which button
-        wins out if both are pressed at the same time without having a sort of flicker 
-        effect for a single frame and helps with performance(even if both are negligible 
-        in this instance, it's just cleaner)*/
+        /**This is the movement logic. Each if statement checks to see if any of the directions are pressed down
+         (isDown) on the cursors or wasd objects(which we defined earlier in create()). If  either the cursors or
+         the wasd keys are pressed, it sets the corresponding velocity(- to go left/up and + to go right/down) to
+         the player's speed as we defined earlier as well.
+         */
         if (this.cursors.left.isDown || this.wasd.left.isDown) {
-            this.player.setVelocityX(-playerSpeed);
-        } else if (this.cursors.right.isDown || this.wasd.right.isDown) {
-            this.player.setVelocityX (+playerSpeed);
+            playerVelocityX -= playerSpeed;
+        }
+        if (this.cursors.right.isDown || this.wasd.right.isDown) {
+            playerVelocityX += playerSpeed;
+        }
+
+        if (this.cursors.up.isDown || this.wasd.right.isDown) {
+             playerVelocityY -= playerSpeed;
+        }
+
+        if (this.cursors.down.isDown || this.wasd.right.isDown) {
+            playerVelocityY += playerSpeed;
+        }
+
+        /*This line actually sets the player's velocity to the player object in the scene instance. The
+        setVelocity() is a method that...sets the velocity based on what we passed through it, in this
+        case the variables we established above after they get increased or decreased*/
+        this.player.setVelocity(playerVelocityX, playerVelocityY);
+
+        /* */
+        if (playerVelocityX !== 0 && playerVelocityY !== 0) {
+            this.player.body.velocity.normalize().scale(playerSpeed);
         }
 
     }
