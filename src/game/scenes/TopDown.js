@@ -7,36 +7,30 @@ export class TopDown extends Phaser.Scene
 
     create ()
     {
-        const player = this.physics.add.sprite(25, 25, 'hero');
-        player.setScale(0.1);
+        this.player = this.physics.add.sprite(25, 25, 'hero');
+        this.player.setScale(0.1);
 
+        
+    }
+
+    update ()
+    {
         this.input.keyboard.on('keydown', (e) => {
             console.log(`${e.key} was pressed!`)
             if (e.code === 'KeyW' || e.code === 'ArrowUp') {
-                player.y -= 5;
+                this.player.setVelocityY(-20);
             }
             if (e.code === 'KeyA' || e.code === 'ArrowLeft') {
-                player.x -= 5;
+                this.player.setVelocityX(-20);
             }
             if (e.code === 'KeyS' || e.code === 'ArrowDown') {
-                player.y += 5;
+                this.player.setVelocityY(+20);
             }
             if (e.code === 'KeyD' || e.code === 'ArrowRight') {
-                player.x += 5;
+                this.player.setVelocityX(+20);
             }
         });
     }
 }
 
 //            console.dir(e); // This shows all properties (and methods) inside an object. Replace E with object.
-
-/*
-create() {
-    // This creates an object with keys mapped to specific codes
-    this.keys = this.input.keyboard.addKeys({
-        up: Phaser.Input.Keyboard.KeyCodes.W,
-        down: Phaser.Input.Keyboard.KeyCodes.S,
-        left: Phaser.Input.Keyboard.KeyCodes.A,
-        right: Phaser.Input.Keyboard.KeyCodes.D
-    });
-}*/

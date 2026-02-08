@@ -34,9 +34,9 @@ export class Preloader extends Scene
 
         this.load.image('logo', 'logo.png');
 
-        this.load.image('boar', 'assets/boarSprite.png');
-        this.load.image('hero', 'assets/goblinHero.png');
-        this.load.spritesheet('meat', 'assets/meatTileset.png', {
+        this.load.image('boar', 'boarSprite.png');
+        this.load.image('hero', 'goblinHero.png');
+        this.load.spritesheet('meat', 'meatTileset.png', {
             frameWidth: 32,
             frameHeight: 32,
             endFrame: 0,
