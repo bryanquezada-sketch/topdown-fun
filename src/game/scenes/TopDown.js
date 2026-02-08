@@ -38,6 +38,13 @@ export class TopDown extends Phaser.Scene
             right: Phaser.Input.Keyboard.KeyCodes.D
         });
 
+        //set up the NPC
+        this.npc = this.physics.add.sprite(150, 150, 'boar');
+        this.npc.setScale(2);
+
+        const zone = this.add.sprite()
+
+
     }
 
     //Part of the Phaser Life Cycle, loops roughly 60 times/second
@@ -50,16 +57,16 @@ export class TopDown extends Phaser.Scene
         let playerVelocityX = 0;
         let playerVelocityY = 0;
 
-        /**This is the movement logic. Each if statement checks to see if any of the directions are pressed down
-         (isDown) on the cursors or wasd objects(which we defined earlier in create()). If  either the cursors or
-         the wasd keys are pressed, it sets the corresponding velocity(- to go left/up and + to go right/down) to
-         the player's speed as we defined earlier as well. The specific reason to have movement logic work this
-         way instead of the traditional if/else statements is so that movement keys respond more realistically
-         or rather in a way that makes more sense so that if two opposite directions are pressed the player stops
-         instead of letting one direction win out. The way this works mathmatically is that if one key is held
-         it either adds/subtracts to the velocity, and if the opposite key is held it would do cancel out by
-         appropriately adding/subtracting it to 0! Math!
-         */
+        /*This is the movement logic. Each if statement checks to see if any of the directions are pressed down
+        (isDown) on the cursors or wasd objects(which we defined earlier in create()). If  either the cursors or
+        the wasd keys are pressed, it sets the corresponding velocity(- to go left/up and + to go right/down) to
+        the player's speed as we defined earlier as well. The specific reason to have movement logic work this
+        way instead of the traditional if/else statements is so that movement keys respond more realistically
+        or rather in a way that makes more sense so that if two opposite directions are pressed the player stops
+        instead of letting one direction win out. The way this works mathmatically is that if one key is held
+        it either adds/subtracts to the velocity, and if the opposite key is held it would do cancel out by
+        appropriately adding/subtracting it to 0! Math!*/
+
         if (this.cursors.left.isDown || this.wasd.left.isDown) {
             playerVelocityX -= playerSpeed;
         }
