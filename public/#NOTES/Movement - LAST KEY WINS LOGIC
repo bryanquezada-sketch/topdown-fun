@@ -1,0 +1,66 @@
+
+To keep your update() loop clean while using the Last-Key-Wins logic, you can move the 
+complex timestamp checks into a reusable helper method.
+
+
+1. The Helper Function
+Add this method to your Scene class. It takes two "opposing" inputs and returns which 
+one should currently be active based on your specific requirements (Last Pressed wins).
+
+// Add this method to your Scene class
+getDirection(negKey, posKey) {
+    const negDown = negKey.isDown;
+    const posDown = posKey.isDown;
+
+    if (negDown && posDown) {
+        // Both held! Return the direction of the key pressed MOST recently
+        return negKey.timeDown > posKey.timeDown ? -1 : 1;
+    }
+    
+    if (negDown) return -1;
+    if (posDown) return 1;
+    
+    return 0; // No keys held
+}
+
+
+2. The Updated update() Method
+Now your update loop becomes much more readable. You calculate a "multiplier" for each axis and apply it.
+
+update() {
+    const playerSpeed = 160;
+
+    // Use our helper to get -1, 0, or 1 for each axis
+    // Since WASD and Arrows are objects, we pass the specific keys
+    const dirX = this.getDirection(
+        this.wasd.left.isDown ? this.wasd.left : this.cursors.left, 
+        this.wasd.right.isDown ? this.wasd.right : this.cursors.right
+    );
+
+    const dirY = this.getDirection(
+        this.wasd.up.isDown ? this.wasd.up : this.cursors.up, 
+        this.wasd.down.isDown ? this.wasd.down : this.cursors.down
+    );
+
+    // Apply the velocity
+    this.player.setVelocity(dirX * playerSpeed, dirY * playerSpeed);
+
+    // Final Normalize (prevents diagonal speed boost)
+    if (dirX !== 0 && dirY !== 0) {
+        this.player.body.velocity.normalize().scale(playerSpeed);
+    }
+}
+
+Technical Note on timeDown
+The Key.timeDown property is a timestamp provided by the Phaser Input Manager. 
+Comparing these values is the most accurate way to handle "fighting" keys because 
+it doesn't depend on which line of code came first, but rather when the player 
+physically hit the button.
+
+Why this is a "Pro" Pattern
+DRY (Don't Repeat Yourself): You don't have to write the timeDown comparison logic 
+twice (once for X and once for Y). The helper handles both.
+Scalability: If you wanted to add a third control scheme (like IJKL), you only need 
+to update the logic in one place.
+Readability: Anyone reading your update() loop can immediately see that you are 
+getting a direction and multiplying it by speed—the "messy" timestamp logic is tucked away.
