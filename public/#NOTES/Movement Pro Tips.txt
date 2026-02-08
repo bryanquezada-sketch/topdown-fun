@@ -1,0 +1,10 @@
+Pro Tips for Better Input
+
+Combine with Arrows: Many developers recommend supporting both WASD and arrow keys for accessibility. 
+You can check both in your if statements or use createCursorKeys() alongside your WASD mapping.
+
+Prevent Browser Scrolling: If your game is in a scrollable page, use this.input.keyboard.addCapture('W,A,S,D') 
+to prevent the browser from scrolling when the player moves.
+
+Event Listeners: For single actions (like a "press E to interact"), use events like 
+this.input.keyboard.on('keydown-E', callback) instead of checking in the update loop to save performance. 
