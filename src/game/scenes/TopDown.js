@@ -53,7 +53,12 @@ export class TopDown extends Phaser.Scene
         /**This is the movement logic. Each if statement checks to see if any of the directions are pressed down
          (isDown) on the cursors or wasd objects(which we defined earlier in create()). If  either the cursors or
          the wasd keys are pressed, it sets the corresponding velocity(- to go left/up and + to go right/down) to
-         the player's speed as we defined earlier as well.
+         the player's speed as we defined earlier as well. The specific reason to have movement logic work this
+         way instead of the traditional if/else statements is so that movement keys respond more realistically
+         or rather in a way that makes more sense so that if two opposite directions are pressed the player stops
+         instead of letting one direction win out. The way this works mathmatically is that if one key is held
+         it either adds/subtracts to the velocity, and if the opposite key is held it would do cancel out by
+         appropriately adding/subtracting it to 0! Math!
          */
         if (this.cursors.left.isDown || this.wasd.left.isDown) {
             playerVelocityX -= playerSpeed;
@@ -62,11 +67,11 @@ export class TopDown extends Phaser.Scene
             playerVelocityX += playerSpeed;
         }
 
-        if (this.cursors.up.isDown || this.wasd.right.isDown) {
+        if (this.cursors.up.isDown || this.wasd.up.isDown) {
              playerVelocityY -= playerSpeed;
         }
 
-        if (this.cursors.down.isDown || this.wasd.right.isDown) {
+        if (this.cursors.down.isDown || this.wasd.down.isDown) {
             playerVelocityY += playerSpeed;
         }
 
@@ -75,7 +80,19 @@ export class TopDown extends Phaser.Scene
         case the variables we established above after they get increased or decreased*/
         this.player.setVelocity(playerVelocityX, playerVelocityY);
 
-        /* */
+        /*Okay so this one is a check to see if playerVelocity on either directions is NOT 0 first. This
+        is so that the following line of code doesn't try to normalize movement without first checking to
+        see if both velocities are actively changing. Through Phaser's grace this would work without the
+        if statement, but it also prevents Phaser from just running the code constantly throughout the
+        game which allows us to re-use it later if we ever use the same movement logic for enemies so
+        that it doesn't slow down the game.
+        Now what the statement inside the if statement is doing is first referencing the scene instance
+        of player and referencing it's physics body and referencing the velocity vector inside the
+        physics body and running a pre-made method called normalize() which contains the math to
+        turn the vector into a length of 1 and returns the velocity directly to the next command which
+        is scale() in this case. It takes the playerSpeed and the vector length which was adjusted
+        earlier and multiplies by playerSpeed. The reason to do all of this is because without it,
+        the player would move faster if they went diagonal because of Pythagoras*/
         if (playerVelocityX !== 0 && playerVelocityY !== 0) {
             this.player.body.velocity.normalize().scale(playerSpeed);
         }
