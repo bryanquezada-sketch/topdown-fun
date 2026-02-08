@@ -24,13 +24,15 @@ export class TopDown extends Phaser.Scene
         hat is assigned to the scene instance. The pre-built function createCursorKeys() 
         contains left, right, up, down, space and shift. This way we don't have to retype
         everything like we did for wasd down below.
-        It's really just to help with readability.
+        It's really just to help with readability, it's apparently standard for Phaser.
         */
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        //We're assigning keys to the object 'wasd'. This is so that we don't have to manage 4 separate variables and for readability.
-        //addKeys() triggers preventDefault(). preventDefault is a method used to stop default browser key behaviors like scrolling.
-        //the keys are assigned the phasers input keyboard manager's keycodes for W, A, S and D.
+        /*We're assigning keys to the object 'wasd'. This is so that we don't have to manage 
+        4 separate variables and for readability. addKeys() triggers preventDefault(). 
+        preventDefault is a method used to stop default browser key behaviors like scrolling.
+        the keys are assigned the phasers input keyboard manager's keycodes for W, A, S and D.
+        so they can now be used to reference later*/
         this.wasd = this.input.keyboard.addKeys ({
             up: Phaser.Input.Keyboard.KeyCodes.W,
             down: Phaser.Input.Keyboard.KeyCodes.S,
@@ -42,7 +44,24 @@ export class TopDown extends Phaser.Scene
 
     update ()
     {
+        const playerSpeed = 160;
 
+        if (this.cursors.up.isDown || this.wasd.up.isDown) {
+            this.player.setVelocityY -= playerSpeed;
+        } else if (this.cursors.down.isDown || this.wasd.down.isDown) {
+            this.player.setVelocityY += playerSpeed;
+        };
+
+        /*The reason you separate horizontal and veritcal movement is so that both could be
+        true at the same time for diagonal movement. Up and down will never be true at the
+        same time and neither will left and right so else if makes sense for them to use it
+        to referee which was pressed first so it doesn't get overridden by the second key if
+        they're both pressed at the same time. */
+        if (this.cursors.left.isDown || this.wasd.left.isDown) {
+            this.player.setVelocityX -= playerSpeed;
+        } else if (this.cursors.right.isDown || this.wasd.right.isDown) {
+            this.player.setVelocityX += playerSpeed
+        }
 
     }
 }
