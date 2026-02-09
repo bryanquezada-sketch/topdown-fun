@@ -42,11 +42,11 @@ export class TopDown extends Phaser.Scene
         this.npc = this.physics.add.sprite(150, 150, 'boar');
         this.npc.setScale(2);
 
-        const zone = this.add.zone(this.player.x, this.player.y, 25, 50);
-        zone.setOrigin(0.5, 0);
+        this.zone = this.add.zone(this.player.x, this.player.y, 0, 0);
+        this.physics.world.enable(this.zone);
+        this.zone.body.setCircle(12.5, -12.5, -12.5);
+
         
-        const debugRect = this.add.rectangle(0, 0, zone.width, zone.height, 0x00ff00, 0.3);
-        Phaser.Display.Align.In.TopLeft(debugRect, zone);
 
     }
 
@@ -59,6 +59,10 @@ export class TopDown extends Phaser.Scene
         const playerSpeed = 160;
         let playerVelocityX = 0;
         let playerVelocityY = 0;
+
+        this.zone.x = this.player.x;
+        this.zone.y = this.player.y;
+
 
         /*This is the movement logic. Each if statement checks to see if any of the directions are pressed down
         (isDown) on the cursors or wasd objects(which we defined earlier in create()). If  either the cursors or
