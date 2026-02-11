@@ -63,6 +63,7 @@ export class TopDown extends Phaser.Scene
         this.zone.x = this.player.x;
         this.zone.y = this.player.y;
 
+        
 
         /*This is the movement logic. Each if statement checks to see if any of the directions are pressed down
         (isDown) on the cursors or wasd objects(which we defined earlier in create()). If  either the cursors or
@@ -73,6 +74,10 @@ export class TopDown extends Phaser.Scene
         instead of letting one direction win out. The way this works mathmatically is that if one key is held
         it either adds/subtracts to the velocity, and if the opposite key is held it would do cancel out by
         appropriately adding/subtracting it to 0! Math!*/
+
+        
+        // #region Movement Logic
+
         if (this.cursors.left.isDown || this.wasd.left.isDown) {
             playerVelocityX -= playerSpeed;
         }
@@ -87,6 +92,9 @@ export class TopDown extends Phaser.Scene
         if (this.cursors.down.isDown || this.wasd.down.isDown) {
             playerVelocityY += playerSpeed;
         }
+
+        // #endregion
+
 
         /*This line actually sets the player's velocity to the player object in the scene instance. The
         setVelocity() is a method that...sets the velocity based on what we passed through it, in this
