@@ -1,3 +1,4 @@
+// These are two new classes that have to be imported 
 import PlayerController from './PlayerController.js';
 import EntityController from './EntityController.js';
 
@@ -25,6 +26,10 @@ export class TopDown extends Phaser.Scene
         this.npc = this.physics.add.sprite(150, 150, 'boar');
         this.npc.setScale(2);
 
+        // allocating memory for playerController. 
+        //calls the constructor() inside PlayerController. 
+        //Assigns the returned object reference to this.playerController
+        //so after this line runes: this.playerController holds a reference to a brand-new collector object stored in memory.
         this.playerController = new PlayerController(this.player, 160, this.cursors, this.wasd);
         this.entityController = new EntityController(this.npc)
 
