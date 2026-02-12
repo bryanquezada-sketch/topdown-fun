@@ -22,10 +22,21 @@ export default class PlayerController {
     }
 
     handleInput () {
-        if (this.cursors.left.isDown || this.wasd.left.isDown) this.velocityX -= this.speed;
-        if (this.cursors.right.isDown || this.wasd.right.isDown) this.velocityX += this.speed;
-        if (this.cursors.up.isDown || this.wasd.up.isDown) this.velocityY -= this.speed;        
-        if (this.cursors.down.isDown || this.wasd.down.isDown) this.velocityY += this.speed;
+        if (this.cursors.left.isDown || this.wasd.left.isDown) {
+            this.velocityX -= this.speed;
+        }
+        if (this.cursors.right.isDown || this.wasd.right.isDown) {
+            this.velocityX += this.speed;
+        }
+
+        if (this.cursors.up.isDown || this.wasd.up.isDown) {
+            this.velocityY -= this.speed;
+        }
+
+        if (this.cursors.down.isDown || this.wasd.down.isDown) {
+            this.velocityY += this.speed;
+        }
+
     }
 
     applyVelocity() {
