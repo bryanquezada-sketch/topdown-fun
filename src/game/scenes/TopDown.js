@@ -13,6 +13,7 @@ export class TopDown extends Phaser.Scene
     {
         this.player = this.physics.add.sprite(25, 25, 'hero');
         this.player.setScale(0.1);
+        this.facing = new Phaser.Math.Vector2(0,1);
 
   
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -22,6 +23,7 @@ export class TopDown extends Phaser.Scene
             left: Phaser.Input.Keyboard.KeyCodes.A,
             right: Phaser.Input.Keyboard.KeyCodes.D
         });
+
 
         this.npc = this.physics.add.sprite(150, 150, 'boar');
         this.npc.setScale(2);
@@ -33,16 +35,32 @@ export class TopDown extends Phaser.Scene
         this.playerController = new PlayerController(this.player, 160, this.cursors, this.wasd);
         this.entityController = new EntityController(this.npc)
 
-        this.zone = this.add.zone(this.player.x, this.player.y, 0, 0);
-        this.physics.world.enable(this.zone);
-        this.zone.body.setCircle(12.5, -12.5, -12.5);
+
+
+        this.interactionZone = this.add.zone(this.player.x, this.player.y, 0, 0);
+        this.physics.world.enable(this.interactionZone);
+        this.interactionZone.body.setCircle(12.5, -12.5, -12.5);
+        this.interactionZone.body.setAllowGravity(false);
+        this.interactionZone.body.setImmovable(true);
+
+        this.npcs = this.physics.add.group();
+        let npc = this.npcs.create(0, 0, 'npc');
+        npc.body.setImmovable(true);
+
+        this.physics.add.overlap(
+            this.interactionZone,
+            this.npcs,
+            this.handleInteraction,
+            null,
+            this
+        );
 
     }
 
     update (time, delta)
     {
-        this.zone.x = this.player.x;
-        this.zone.y = this.player.y;
+        this.interactionZone.x = this.player.x;
+        this.interactionZone.y = this.player.y;
 
         this.playerController.update();
         this.entityController.update();
