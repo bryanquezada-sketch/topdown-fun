@@ -8,7 +8,7 @@ export default class EntityController {
 
     update(){
         this.entity.setVelocity(
-            this.directionX * this.speed, 
+            this.directionX * this.speed,
             this.directionY * this.speed
         );
 
