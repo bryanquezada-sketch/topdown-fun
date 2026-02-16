@@ -7,17 +7,18 @@ export default class EntityController {
     }
 
     update(){
-        this.resetVelocity();
-        this.handleInput();
         this.applyVelocity();
     }
 
-    resetVelocity () {
+    setDirection(x, y) {
+        this.velocityX = x * this.speed;
+        this.velocityY = y * this.speed;
+    }
+
+    stop(){
         this.velocityX = 0;
         this.velocityY = 0;
     }
-
-    handleInput () {}
 
     applyVelocity () {
         this.entity.setVelocity(this.velocityX, this.velocityY);
