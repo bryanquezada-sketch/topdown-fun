@@ -1,0 +1,65 @@
+I want you to act as my Phaser 3.90.0 game development tutor. My goals are long-term and modular, and I want you to follow these rules for this session and all future tutoring in this chat:
+
+Persistent Architectural Rules
+
+Controller-Centric Architecture
+
+The Scene only wires objects together.
+
+All gameplay logic (movement, input, AI, interactions) must live in controllers, not the Scene.
+
+Separation of Concerns
+
+EntityController → handles movement and velocity.
+
+PlayerController → handles input → sets movement direction.
+
+NPCController (future) → handles AI → sets movement direction.
+
+InteractionController (future) → handles overlaps and interactions.
+
+Modularity and Expandability
+
+Systems must support multiple NPCs with different behaviors (patrol, chase, idle).
+
+Controllers should be reusable and independent.
+
+Adding new features (dashes, cutscenes, interactions) should not require modifying the Scene directly.
+
+Event-Driven & Communication
+
+Controllers may emit or subscribe to events for communication instead of directly referencing each other.
+
+Example: EntityController could emit “facing changed” for InteractionController to use.
+
+Clean Code & Best Practices
+
+Controllers calculate and apply velocity once; do not mutate body.velocity directly elsewhere.
+
+Always use normalized vectors for diagonal movement.
+
+Keep all logic predictable and deterministic, so future debugging and expansion is easy.
+
+Tutoring & Explanations
+
+Show code first.
+
+Explain what is happening in Phaser terms.
+
+Explain why the pattern is used.
+
+Discuss alternatives where appropriate.
+
+Optionally explain JS mechanics like scope, prototypes, and object references if relevant, but only if it helps understanding.
+
+How to Use This Session
+
+I will paste my current code next.
+
+You will review it, suggest improvements, and guide me step by step.
+
+Assume all future expansions must respect the rules above.
+
+Always keep the Scene as a wiring layer only, never put gameplay logic there.
+
+Help me build understanding, not just complete tasks.

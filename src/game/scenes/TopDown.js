@@ -1,6 +1,5 @@
 import PlayerController from './PlayerController.js';
 import EntityController from './EntityController.js';
-import InteractionController from './InteractionController.js';
 
 export class TopDown extends Phaser.Scene
 {
@@ -11,11 +10,10 @@ export class TopDown extends Phaser.Scene
 
     create ()
     {
+        // --- Player creation and input ---
         this.player = this.physics.add.sprite(25, 25, 'hero');
         this.player.setScale(0.1);
-        this.facing = new Phaser.Math.Vector2(0,1);
 
-  
         this.cursors = this.input.keyboard.createCursorKeys();
         this.wasd = this.input.keyboard.addKeys ({
             up: Phaser.Input.Keyboard.KeyCodes.W,
@@ -24,27 +22,21 @@ export class TopDown extends Phaser.Scene
             right: Phaser.Input.Keyboard.KeyCodes.D
         });
 
-
-
-        this.npcs = this.physics.add.group();
-        let npc = this.npcs.create(150, 150, 'boar');
-        npc.setScale(2);
-        npc.body.setImmovable(true);
-
+        // --- Player movement ---
         this.playerMovement = new EntityController(this.player, 160);
-        // allocating memory for playerController. 
-        //calls the constructor() inside PlayerController. 
-        //Assigns the returned object reference to this.playerController
-        //so after this line runes: this.playerController holds a reference to a brand-new collector object stored in memory.
         this.playerController = new PlayerController(
             this.playerMovement,
             this.cursors,
             this.wasd
         );
-        
+
+        // --- NPCs ---
+        this.npcs = this.physics.add.group();
+        const npc = this.npcs.create(150, 150, 'boar');
+        npc.setScale(2);
+        npc.body.setImmovable(true);
+
         this.npcMovement = new EntityController(npc, 100);
-
-
     }
 
     update (time, delta)
@@ -54,5 +46,3 @@ export class TopDown extends Phaser.Scene
         this.npcMovement.update();
     }
 }
-
-//            console.dir(e); // This shows all properties (and methods) inside an object. Replace E with object.

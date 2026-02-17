@@ -1,0 +1,33 @@
+🎯 So How Should You Think?
+
+Use this mental checklist:
+
+What responsibility is this?
+What breaks if it’s removed?
+Who conceptually owns this behavior?
+Will this grow in complexity?
+Does placing it here increase coupling?
+
+If it:
+
+Has a clear domain
+Will grow in features
+Doesn’t belong to movement
+Doesn’t belong to input
+Should be reusable
+
+It gets its own controller.
+
+
+Game architecture scales by separating:
+
+Movement
+Intention
+Interaction
+Rendering
+State
+Abilities
+
+You don’t mix domains.
+
+You isolate them.
