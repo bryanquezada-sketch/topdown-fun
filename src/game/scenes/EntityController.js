@@ -7,13 +7,15 @@ export default class EntityController {
     }
 
     update(){
-        this.entity.setVelocity(
-            this.directionX * this.speed,
-            this.directionY * this.speed
-        );
-
-        if (this.directionX !== 0 && this.directionY !== 0) {
-            this.entity.body.velocity.normalize().scale(this.speed);
+        let vx = this.directionX;
+        let vy = this.directionY;
+        
+        if (vx !== 0 || vy !== 0) {
+            const vec = new Phaser.Math.Vector2(vx, vy).normalize().scale(this.speed);
+            
+            this.entity.setVelocity(vec.x, vec.y);
+        } else {
+            this.entity.setVelocity(0, 0);
         }
     
     }
