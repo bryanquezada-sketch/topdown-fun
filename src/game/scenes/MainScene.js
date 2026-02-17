@@ -1,11 +1,11 @@
 import PlayerController from './PlayerController.js';
 import EntityController from './EntityController.js';
 
-export class TopDown extends Phaser.Scene
+export class MainScene extends Phaser.Scene
 {
     constructor ()
     {
-        super({ key: "TopDown" });
+        super({ key: "MainScene" });
     }
 
     create ()
