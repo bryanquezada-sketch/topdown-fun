@@ -1,6 +1,5 @@
 //INTERACTION MANAGER
 //Handles the logic of checking for nearby NPCs
-//Allows 
 
 export default class InteractionController {
     constructor(scene, player, npcs) {
@@ -21,7 +20,7 @@ export default class InteractionController {
 
     check() {
         let target = null;
-        this.scene.physics.overap(this.zone, this.npcs, (zone, npc) => {
+        this.scene.physics.overlap(this.interactionZone, this.npcs, (interaction, npc) => {
             target = npc;
         });
         
@@ -34,4 +33,5 @@ export default class InteractionController {
         console.log("Interacting with NPC", npc.texture.key);
         if (npc.talk) npc.talk();
     }
+
 }
