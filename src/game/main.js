@@ -1,5 +1,5 @@
 import { Boot } from './scenes/Boot';
-import { MainScene } from './scenes/MainScene';
+import { TopDown } from './scenes/TopDown';
 import { Preloader } from './scenes/Preloader';
 import { AUTO, Game } from 'phaser';
 
@@ -25,7 +25,7 @@ const config = {
     scene: [
         Boot,
         Preloader,
-        MainScene,
+        TopDown,
     ]
 };
 
