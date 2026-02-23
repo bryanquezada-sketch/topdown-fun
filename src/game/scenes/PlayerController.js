@@ -1,12 +1,14 @@
 //  INPUT & STATE HANDLING - Bridge between the user and Game World
 //  Sole Concern is is translating RAW hardware input into abstract directional data
 
+import { Actions } from "phaser";
+
 export default class PlayerController {
-    constructor (movement, cursors, wasd, interaction) {
+    constructor ( {movement, interaction, actions} ) {
         this.movement = movement;
-        this.cursors = cursors;
-        this.wasd = wasd;
         this.interaction = interaction;
+        this.actions = actions;
+
         this.facing = new Phaser.Math.Vector2(0,1);
     }
 
@@ -15,18 +17,18 @@ export default class PlayerController {
         let x = 0;
         let y = 0;
 
-        if (this.cursors.left.isDown || this.wasd.left.isDown) {
+        if (this.actions.left.isDown || this.actions.altLeft.isDown) {
             x -= 1;
         }
-        if (this.cursors.right.isDown || this.wasd.right.isDown) {
+        if (this.actions.right.isDown || this.actions.altRight.isDown) {
             x += 1;
         }
 
-        if (this.cursors.up.isDown || this.wasd.up.isDown) {
+        if (this.actions.up.isDown || this.actions.altUp.isDown) {
             y -= 1;
         }
 
-        if (this.cursors.down.isDown || this.wasd.down.isDown) {
+        if (this.actions.down.isDown || this.actions.altDown.isDown) {
             y += 1;
         }
 
@@ -40,5 +42,6 @@ export default class PlayerController {
         this.interaction.updateZone(this.facing.x, this.facing.y);
 
         this.movement.update();
+
     }
 }

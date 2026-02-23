@@ -18,13 +18,20 @@ export class MainScene extends Phaser.Scene
         this.player = this.physics.add.sprite(25, 25, 'hero');
         this.player.setScale(0.1);
 
-        this.cursors = this.input.keyboard.createCursorKeys();
-        this.wasd = this.input.keyboard.addKeys ({
-            up: Phaser.Input.Keyboard.KeyCodes.W,
-            down: Phaser.Input.Keyboard.KeyCodes.S,
-            left: Phaser.Input.Keyboard.KeyCodes.A,
-            right: Phaser.Input.Keyboard.KeyCodes.D
-        });
+        const keyConfig = {
+            up: 'W',
+            down: 'S',
+            left: 'A',
+            right: 'D',
+            interact: 'E',
+            
+            altUp: 'UP',
+            altDown: 'DOWN',
+            altLeft: 'LEFT',
+            altRight: 'RIGHT'
+        }
+
+        this.actions = this.input.keyboard.addKeys(keyConfig);
 
         // --- NPCs ---
         this.npcs = this.physics.add.group();
@@ -37,12 +44,11 @@ export class MainScene extends Phaser.Scene
         // --- Player Movement ---
         this.playerMovement = new EntityController(this.player, 160);
         this.interactionController = new InteractionController(this, this.player, this.npcs);
-        this.playerController = new PlayerController(
-            this.playerMovement,
-            this.cursors,
-            this.wasd,
-            this.interactionController
-        );
+        this.playerController = new PlayerController({
+            movement: this.playerMovement,
+            interaction: this.interactionController,
+            actions: this.actions
+        });
 
 
         // -- END OF CREATE() ---
