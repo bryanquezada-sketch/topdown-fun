@@ -39,6 +39,10 @@ export default class PlayerController {
             this.movement.setDirection(x, y);
         }
 
+        if (Phaser.Input.Keyboard.JustDown(this.actions.interact)) {
+            this.interaction.check();
+        }
+
         this.interaction.updateZone(this.facing.x, this.facing.y);
         this.movement.update();
 

@@ -35,11 +35,15 @@ export class MainScene extends Phaser.Scene
 
         // --- NPCs ---
         this.npcs = this.physics.add.group();
-        const npc = this.npcs.create(150, 150, 'boar');
-        npc.setScale(2);
-        npc.body.setImmovable(true);
+        const boar = this.npcs.create(150, 150, 'boar');
+        boar.setScale(2);
+        boar.body.setImmovable(true);
 
-        this.npcMovement = new EntityController(npc, 100);
+        boar.talk = () => {
+            console.log("The boar grunts at you!");
+        };
+
+        this.npcMovement = new EntityController(boar, 100);
 
         // --- Player Movement ---
         this.playerMovement = new EntityController(this.player, 160);

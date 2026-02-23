@@ -8,7 +8,7 @@ export default class InteractionController {
         this.npcs = npcs;
 
         this.interactionZone = scene.add.zone(0, 0, 32, 32);
-        scene.physics.add.existing(this.interactionZone);
+        scene.physics.add.existing(this.interactionZone, true);
     }
     
     updateZone (facingX, facingY) {
@@ -16,11 +16,13 @@ export default class InteractionController {
 
         this.interactionZone.x = this.player.x + (facingX * offset);
         this.interactionZone.y = this.player.y + (facingY * offset);
+
+        this.interactionZone.body.updateFromGameObject();
     }
 
     check() {
         let target = null;
-        this.scene.physics.overlap(this.interactionZone, this.npcs, (interaction, npc) => {
+        this.scene.physics.overlap(this.interactionZone, this.npcs, (zone, npc) => {
             target = npc;
         });
         
