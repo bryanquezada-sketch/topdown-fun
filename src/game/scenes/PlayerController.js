@@ -3,15 +3,10 @@
 
 export default class PlayerController {
     constructor (movement, cursors, wasd, interaction) {
-
         this.movement = movement;
-        
         this.cursors = cursors;
-
         this.wasd = wasd;
-
         this.interaction = interaction;
-
         this.facing = new Phaser.Math.Vector2(0,1);
     }
 

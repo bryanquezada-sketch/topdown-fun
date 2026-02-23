@@ -26,7 +26,15 @@ export class MainScene extends Phaser.Scene
             right: Phaser.Input.Keyboard.KeyCodes.D
         });
 
-        // --- Player movement ---
+        // --- NPCs ---
+        this.npcs = this.physics.add.group();
+        const npc = this.npcs.create(150, 150, 'boar');
+        npc.setScale(2);
+        npc.body.setImmovable(true);
+
+        this.npcMovement = new EntityController(npc, 100);
+
+        // --- Player Movement ---
         this.playerMovement = new EntityController(this.player, 160);
         this.interactionController = new InteractionController(this, this.player, this.npcs);
         this.playerController = new PlayerController(
@@ -36,14 +44,10 @@ export class MainScene extends Phaser.Scene
             this.interactionController
         );
 
-        // --- NPCs ---
-        this.npcs = this.physics.add.group();
-        const npc = this.npcs.create(150, 150, 'boar');
-        npc.setScale(2);
-        npc.body.setImmovable(true);
 
-        this.npcMovement = new EntityController(npc, 100);
+        // -- END OF CREATE() ---
     }
+    
 
     update (time, delta)
     {

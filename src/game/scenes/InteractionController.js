@@ -11,7 +11,7 @@ export default class InteractionController {
     updateZone (facingX, facingY) {
         const offset = 30;
 
-        this.interactionZone.x = this.player.x + (this.facingX * offset);
-        this.interactionZone.x = this.player.y + (this.facingY * offset);
+        this.interactionZone.x = this.player.x + (facingX * offset);
+        this.interactionZone.y = this.player.y + (facingY * offset);
     }
 }
