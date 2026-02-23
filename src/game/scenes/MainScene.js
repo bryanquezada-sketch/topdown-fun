@@ -42,7 +42,6 @@ export class MainScene extends Phaser.Scene
     update (time, delta)
     {
         this.playerController.update();
-        this.playerMovement.update();
         this.npcMovement.update();
     }
 }

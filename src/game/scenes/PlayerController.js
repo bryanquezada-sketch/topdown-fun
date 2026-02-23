@@ -2,10 +2,9 @@
 import EntityController from "./EntityController";
 
 export default class PlayerController {
-    constructor (sprite, cursors, wasd) {
-        this.sprite = sprite;
+    constructor (movement, cursors, wasd) {
 
-        this.movement = new EntityController(sprite, 160);
+        this.movement = movement;
         
         this.cursors = cursors;
         this.wasd = wasd;
