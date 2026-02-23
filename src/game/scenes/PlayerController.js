@@ -1,5 +1,3 @@
-import EntityController from "./EntityController";
-
 //  INPUT & STATE HANDLING - Bridge between the user and Game World
 //  Sole Concern is is translating RAW hardware input into abstract directional data
 
@@ -12,9 +10,9 @@ export default class PlayerController {
 
         this.wasd = wasd;
 
-        this.facing = new Phaser.Math.Vector2(0,1);
-
         this.interaction = interaction;
+
+        this.facing = new Phaser.Math.Vector2(0,1);
     }
 
     update ()

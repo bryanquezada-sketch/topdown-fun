@@ -1,5 +1,6 @@
 import PlayerController from './PlayerController.js';
 import EntityController from './EntityController.js';
+import InteractionController from './InteractionController.js';
 
 // SCENE MANAGEMENT - The Orchestrator
 // Handles high-level setup(preloading assets, creating game objects(Player, NPCs), and intializing physics groups.
@@ -25,16 +26,14 @@ export class MainScene extends Phaser.Scene
             right: Phaser.Input.Keyboard.KeyCodes.D
         });
 
-        this.interactionZone = this.add.zone(0, 0, 30, 30);
-        this.physics.add.existing(this.interactionZone);
-
         // --- Player movement ---
         this.playerMovement = new EntityController(this.player, 160);
+        this.interactionController = new InteractionController(this, this.player, this.npcs);
         this.playerController = new PlayerController(
             this.playerMovement,
             this.cursors,
             this.wasd,
-            this.interactionZone
+            this.interactionController
         );
 
         // --- NPCs ---

@@ -1,17 +1,17 @@
-export default class InterctionController {
+export default class InteractionController {
     constructor(scene, player, npcs) {
         this.scene = scene;
         this.player = player;
         this.npcs = npcs;
 
         this.interactionZone = scene.add.zone(0, 0, 32, 32);
-        scene.physics.add.existing(this.zone);
+        scene.physics.add.existing(this.interactionZone);
     }
     
     updateZone (facingX, facingY) {
         const offset = 30;
 
         this.interactionZone.x = this.player.x + (this.facingX * offset);
-        this.interactionZone.x = this.player.y + (this.facing.y * offset);
+        this.interactionZone.x = this.player.y + (this.facingY * offset);
     }
 }
