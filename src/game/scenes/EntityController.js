@@ -1,3 +1,6 @@
+//  PHYSICAL MOVEMENT - Logic/Physics layer
+//  Applies velocity to sprite based on direction and speed 
+
 export default class EntityController {
     constructor(entity, speed = 160) {
         this.entity = entity;
