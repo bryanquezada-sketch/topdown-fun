@@ -1,3 +1,7 @@
+//INTERACTION MANAGER
+//Handles the logic of checking for nearby NPCs
+//Allows 
+
 export default class InteractionController {
     constructor(scene, player, npcs) {
         this.scene = scene;
@@ -13,5 +17,21 @@ export default class InteractionController {
 
         this.interactionZone.x = this.player.x + (facingX * offset);
         this.interactionZone.y = this.player.y + (facingY * offset);
+    }
+
+    check() {
+        let target = null;
+        this.scene.physics.overap(this.zone, this.npcs, (zone, npc) => {
+            target = npc;
+        });
+        
+        if (target) {
+            this.interact(target);
+        }
+    }
+
+    interact(npc) {
+        console.log("Interacting with NPC", npc.texture.key);
+        if (npc.talk) npc.talk();
     }
 }

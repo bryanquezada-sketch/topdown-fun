@@ -40,7 +40,6 @@ export default class PlayerController {
         }
 
         this.interaction.updateZone(this.facing.x, this.facing.y);
-
         this.movement.update();
 
     }
