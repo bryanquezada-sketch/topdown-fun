@@ -4,7 +4,7 @@ import EntityController from "./EntityController";
 //  Sole Concern is is translating RAW hardware input into abstract directional data
 
 export default class PlayerController {
-    constructor (movement, cursors, wasd, interactionZone) {
+    constructor (movement, cursors, wasd, interaction) {
 
         this.movement = movement;
         
@@ -14,7 +14,7 @@ export default class PlayerController {
 
         this.facing = new Phaser.Math.Vector2(0,1);
 
-        this.interactionZone = interactionZone;
+        this.interaction = interaction;
     }
 
     update ()
@@ -40,17 +40,11 @@ export default class PlayerController {
         if (x === 0 && y === 0) {
             this.movement.stop();
         } else {
-            console.log(this.facing instanceof Phaser.Math.Vector2);
             this.facing.set(x, y).normalize();
             this.movement.setDirection(x, y);
         }
 
-    // --- ZONE ---
-
-        const offset = 30;
-
-        this.interactionZone.x = this.movement.entity.x + (this.facing.x * offset);
-        this.interactionZone.y = this.movement.entity.y + (this.facing.y * offset);
+        this.interaction.updateZone(this.facing.x, this.facing.y);
 
         this.movement.update();
     }
