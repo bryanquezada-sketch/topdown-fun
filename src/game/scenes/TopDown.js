@@ -47,16 +47,25 @@ export class TopDown extends Phaser.Scene
 
         const conversation = 
         {
-            npcText: ``,
+            npcText: `*Oink Oink*`,
             choices: 
-            [{
-                text: ``,
+            [   {
+                text: `Choice1`,
                 nextNode: 
                 {
-                    
-                }
+                    npcText: `You chose...wisely!`,
+                    choices: []
+                },
+
+                text: `Choice2`,
+                nextNode: 
+                {
+                    npcText: `I'm Boar-d`,
+                    choices: []
+                },
                 
-            }]
+                }   
+            ]
         }
 
         this.npcTextDisplay = this.add.text(50, 50, "", {
