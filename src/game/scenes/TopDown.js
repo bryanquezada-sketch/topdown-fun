@@ -48,7 +48,7 @@ export class TopDown extends Phaser.Scene
         const conversation = 
         {
             npcText: ``,
-            choice: 
+            choices: 
             [{
                 text: ``,
                 nextNode: 
@@ -68,9 +68,11 @@ export class TopDown extends Phaser.Scene
 
         this.currentButtons = [];
 
+        /* MEMORY
         this.conversationMemory = {
             
         }
+        */
 
         this.displayNode(conversation);
 
@@ -115,7 +117,7 @@ export class TopDown extends Phaser.Scene
                 padding: { x: 10, y:5 }
             });
 
-            button.setInteractve();
+            button.setInteractive();
 
             button.on('pointerdown', () => {
 
