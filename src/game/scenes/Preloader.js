@@ -41,6 +41,8 @@ export class Preloader extends Scene
             frameHeight: 32,
             endFrame: 0,
         });
+
+        this.load.font('bitPotion', 'BitPotionExt.ttf');
     }
 
     create ()

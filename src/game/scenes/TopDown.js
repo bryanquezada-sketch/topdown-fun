@@ -50,30 +50,30 @@ export class TopDown extends Phaser.Scene
             npcText: `*Oink Oink*`,
             choices: 
             [   {
-                text: `Choice1`,
+                text: `What's your name friend?`,
                 nextNode: 
                 {
-                    npcText: `You chose...wisely!`,
+                    npcText: `I'm Boar-d.`,
                     choices: []
                 },
                 },
                 {
-                text: `Choice2`,
+                text: `I want to eat you...`,
                 nextNode: 
                 {
-                    npcText: `I'm Boar-d`,
+                    npcText: `*Oink* I know little goblin but you cannot.`,
                     choices: []
                 },
                 }   
             ]
         }
 
-        this.npcTextDisplay = this.add.text(0, 150, "", {
-            fontFamily: '"Courier New", Courier, monospace',
-            fontSize: '16px',
+        this.npcTextDisplay = this.add.text(this.scale.width / 50, this.scale.height / 1.5, "", {
+            fontFamily: 'bitPotion',
+            fontSize: '32px',
             color: '#ffffff',
             wordWrap: { width: 800 }
-        });
+        }).setScrollFactor(0);
 
         this.currentButtons = [];
 
