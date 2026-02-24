@@ -78,6 +78,8 @@ export class TopDown extends Phaser.Scene
 
     }
 
+        // #region DIALOGUE LOGIC & VISUALS
+
     displayNode(node) {
         let textToShow = node.npcText;
 
@@ -144,8 +146,8 @@ export class TopDown extends Phaser.Scene
 
     update ()
     {
+        //#region MOVEMENT
         const playerSpeed = 160;
-        const offset = 30;
         
         let playerVelocityX = 0;
         let playerVelocityY = 0;
@@ -153,7 +155,6 @@ export class TopDown extends Phaser.Scene
         
         if (this.cursors.left.isDown || this.wasd.left.isDown) {
             playerVelocityX -= playerSpeed;
-            
         }
         if (this.cursors.right.isDown || this.wasd.right.isDown) {
             playerVelocityX += playerSpeed;
@@ -174,10 +175,12 @@ export class TopDown extends Phaser.Scene
             this.facing.set(playerVelocityX, playerVelocityY).normalize();
         }
 
+        //#endregion
+
+        const offset = 30;
+
         this.zone.x = this.player.x + (this.facing.x * offset);
-        this.zone.y = this.player.y + (this.facing.y * offset);   
-
-
+        this.zone.y = this.player.y + (this.facing.y * offset);
         this.zone.body.updateFromGameObject();
 
         if (this.canInteract && Phaser.Input.Keyboard.JustDown(this.eKey)) {
