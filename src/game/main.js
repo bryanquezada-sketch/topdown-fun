@@ -7,20 +7,29 @@ import { AUTO, Game } from 'phaser';
 //  https://docs.phaser.io/api-documentation/typedef/types-core#gameconfig
 const config = {
     type: AUTO,
-    width: 200,
-    height: 200,
+    width: 640,
+    height: 360,
     parent: 'game-container',
     backgroundColor: '#028af8',
     scale: {
         mode: Phaser.Scale.FIT,
-        autoCenter: Phaser.Scale.CENTER_BOTH
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        //Optionally use zoom for a fixed scale (e.g., 3x or 4x)
+        zoom: 3
     },
     physics: {
         default: 'arcade',
         arcade: {
             gravity: { y: 0 },
-            debug: true
+            debug: true,
+            //High tileBias prevents falling through thin pixel floors
+            tileBias: 8 
         }
+    },
+    render: {
+        pixelArt: true,
+        antialias: false,
+        roundPixels: true
     },
     scene: [
         Boot,

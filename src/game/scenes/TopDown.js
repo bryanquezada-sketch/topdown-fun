@@ -23,7 +23,7 @@ export class TopDown extends Phaser.Scene
 
         this.eKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 
-        this.boar = this.physics.add.sprite(150, 150, 'boar');
+        this.boar = this.physics.add.sprite(50, 50, 'boar');
         this.boar.setScale(2);
         this.boar.setBodySize(20, 15);
         this.boar.setImmovable();
@@ -45,7 +45,7 @@ export class TopDown extends Phaser.Scene
 
         // #region DIALOGUE
 
-        const conversation = 
+        this.conversation = 
         {
             npcText: `*Oink Oink*`,
             choices: 
@@ -56,24 +56,24 @@ export class TopDown extends Phaser.Scene
                     npcText: `You chose...wisely!`,
                     choices: []
                 },
-
+                },
+                {
                 text: `Choice2`,
                 nextNode: 
                 {
                     npcText: `I'm Boar-d`,
                     choices: []
                 },
-                
                 }   
             ]
         }
 
-        this.npcTextDisplay = this.add.text(50, 50, "", {
-            fontsize: '16px',
+        this.npcTextDisplay = this.add.text(0, 150, "", {
+            fontFamily: '"Courier New", Courier, monospace',
+            fontSize: '16px',
             color: '#ffffff',
-            wordWrap: { width: 400 }
+            wordWrap: { width: 800 }
         });
-        //this.npcTextDisplay.setResolution(2);
 
         this.currentButtons = [];
 
@@ -83,7 +83,7 @@ export class TopDown extends Phaser.Scene
         }
         */
 
-        this.displayNode(conversation);
+        
 
         // #endregion
 
@@ -114,16 +114,17 @@ export class TopDown extends Phaser.Scene
         this.currentButtons[i].destroy();
         }
 
-        let yPosition = 300;
+        let yPosition = 50;
 
         for (let i = 0; i < choices.length; i++) {
             const choice = choices[i];
 
-            const button = this.add.text(50, yPosition, choice.text, {
+            const button = this.add.text(10, yPosition, choice.text, {
                 fontSize: '14px',
                 color: '#00ff00',
                 backgroundColor: '#333333',
-                padding: { x: 10, y:5 }
+                padding: { x: 10, y: 5 },
+                
             });
 
             button.setInteractive();
@@ -145,14 +146,15 @@ export class TopDown extends Phaser.Scene
                 */
 
                 this.displayNode(choice.nextNode);
+                
             });
 
             this.currentButtons.push(button);
+
             yPosition += 40;
+
         }
-
         // #endregion
-
     }
 
     update ()
@@ -195,7 +197,7 @@ export class TopDown extends Phaser.Scene
         this.zone.body.updateFromGameObject();
 
         if (this.canInteract && Phaser.Input.Keyboard.JustDown(this.eKey)) {
-            console.log('OINK OINK')
+            this.displayNode(this.conversation);
         }
         
         this.canInteract = false;
