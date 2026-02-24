@@ -8,6 +8,7 @@ export class TopDown extends Phaser.Scene
     create ()
     {
         this.player = this.physics.add.sprite(25, 25, 'hero');
+        this.player.setBodySize(320, 400);
         this.player.setScale(0.1);
 
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -19,14 +20,17 @@ export class TopDown extends Phaser.Scene
             right: Phaser.Input.Keyboard.KeyCodes.D,
         });
 
-        this.eKey = Phaser.Input.Keyboard.KeyCodes.E;
+        this.eKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 
         this.boar = this.physics.add.sprite(150, 150, 'boar');
         this.boar.setScale(2);
+        this.boar.setBodySize(20, 20);
+        this.boar.setImmovable();
 
         this.zone = this.add.zone(this.player.x, this.player.y, 32, 32);
         this.physics.add.existing(this.zone, true);
-        this.physics.add.overlap(this.player, this.boar, this.talkTo, null, this);
+        this.physics.add.overlap(this.zone, this.boar, this.talkTo, null, this);
+        this.physics.add.collider(this.player, this.boar);
 
         this.facing = new Phaser.Math.Vector2(0, 1);
 
@@ -75,7 +79,9 @@ export class TopDown extends Phaser.Scene
 
     talkTo ()
     {
-        if (Phaser.Input.Keyboard.JustDown(this.))
+        if (Phaser.Input.Keyboard.JustDown(this.eKey)) {
+            console.log('OINK OINK')
+        }
 
     }
 }
