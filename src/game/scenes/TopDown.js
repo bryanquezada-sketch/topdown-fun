@@ -24,13 +24,18 @@ export class TopDown extends Phaser.Scene
 
         this.boar = this.physics.add.sprite(150, 150, 'boar');
         this.boar.setScale(2);
-        this.boar.setBodySize(20, 20);
+        this.boar.setBodySize(20, 15);
         this.boar.setImmovable();
+        this.physics.add.collider(this.player, this.boar);
+
+        this.canInteract = false;
 
         this.zone = this.add.zone(this.player.x, this.player.y, 32, 32);
         this.physics.add.existing(this.zone, true);
-        this.physics.add.overlap(this.zone, this.boar, this.talkTo, null, this);
-        this.physics.add.collider(this.player, this.boar);
+        
+        this.physics.add.overlap(this.zone, this.boar, () => {
+            this.canInteract = true;
+        }, null, this);
 
         this.facing = new Phaser.Math.Vector2(0, 1);
 
@@ -39,7 +44,6 @@ export class TopDown extends Phaser.Scene
     update ()
     {
         const playerSpeed = 160;
-
         const offset = 30;
         
         let playerVelocityX = 0;
@@ -75,13 +79,11 @@ export class TopDown extends Phaser.Scene
 
         this.zone.body.updateFromGameObject();
 
-    }
-
-    talkTo ()
-    {
-        if (Phaser.Input.Keyboard.JustDown(this.eKey)) {
+        if (this.canInteract && Phaser.Input.Keyboard.JustDown(this.eKey)) {
             console.log('OINK OINK')
         }
+        
+        this.canInteract = false;
 
     }
 }
