@@ -24,18 +24,28 @@ export class TopDown extends Phaser.Scene
         this.eKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 
         this.boar = this.physics.add.sprite(50, 50, 'boar');
-        this.boar.setScale(2);
         this.boar.setBodySize(20, 15);
         this.boar.setImmovable();
-        this.physics.add.collider(this.player, this.boar);
 
         this.canInteract = false;
 
         this.zone = this.add.zone(this.player.x, this.player.y, 32, 32);
         this.physics.add.existing(this.zone, true);
         
+        this.mushroom = this.physics.add.staticSprite(this.boar.x, this.boar.y + 32, 'mushroom');
+        this.physics.add.existing(this.mushroom, true);
+        this.mushroom.setVisible(false);
+
         this.physics.add.overlap(this.zone, this.boar, () => {
             this.canInteract = true;
+        });
+
+        this.physics.add.overlap(this.zone, this.mushroom, () => {
+            this.canInteract = true;
+        });
+
+        this.physics.add.overlap(this.zone, [this.boar, this.mushroom], (zone, object) => {
+            this.currentInteractable = object;
         }, null, this);
 
         this.facing = new Phaser.Math.Vector2(0, 1);
@@ -47,8 +57,12 @@ export class TopDown extends Phaser.Scene
 
         this.events.on('dialogueIsInactive', () => {
             this.input.keyboard.enabled = true;
+            this.mushroom.setVisible(true);
+            this.physics.add.collider(this.player, this.mushroom);
         });
 
+
+        this.physics.add.collider(this.player, this.boar);
 
         // #endregion
         
@@ -162,6 +176,7 @@ export class TopDown extends Phaser.Scene
         if ((textToShow === `I expected as much.` || textToShow === `We're done here.` || textToShow === `Precisely. *OINK* Return with sufficient friends and maybe then we may re-open this discussion.`) && node.choices.length === 0 && this.talkedToBoar === false) {
             this.talkedToBoar = true;
             this.events.emit('dialogueIsInactive')
+            this.mushroom.setVisible(true);
         }
         
         this.npcTextDisplay.setText(textToShow);
@@ -243,9 +258,16 @@ export class TopDown extends Phaser.Scene
         this.zone.y = this.player.y + (this.facing.y * offset);
         this.zone.body.updateFromGameObject();
 
-        if (this.canInteract && Phaser.Input.Keyboard.JustDown(this.eKey)) {
+        if (this.canInteract && Phaser.Input.Keyboard.JustDown(this.eKey) && this.currentInteractable) {
+            if (this.currentInteractable === this.boar) {
             this.displayNode(this.conversation);
             this.events.emit('dialogueIsActive')
+            } else if (this.currentInteractable === this.mushroom) {
+                if (this.mushroom.visible) {
+                    this.mushroom.destroy();
+                    console.log('Mushroom got!');
+                } 
+            }
         }
         
         this.canInteract = false;
