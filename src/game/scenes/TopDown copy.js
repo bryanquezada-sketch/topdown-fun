@@ -155,6 +155,7 @@ export class TopDown extends Phaser.Scene
                 fontFamily: 'bitPotion',
                 fontSize: '32px',
                 backgroundColor: '#333333',
+                wordWrap: { width: 100 },
                 padding: { x: 10, y: 5 },
                 
             }).setScrollFactor(0).setOrigin(0.5);
