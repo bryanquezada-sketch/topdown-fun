@@ -41,7 +41,17 @@ export class TopDown extends Phaser.Scene
         this.facing = new Phaser.Math.Vector2(0, 1);
 
         // #endregion
-
+        
+        /* STICK THIS INSIDE CHOICE []
+            {
+              text: ``,
+              nextNode: 
+              {
+                  npcText: ``,
+                  choices: []
+              },
+              },
+        */
 
         // #region DIALOGUE
 
@@ -50,21 +60,44 @@ export class TopDown extends Phaser.Scene
             npcText: `*Oink Oink*`,
             choices: 
             [   {
-                text: `What's your name friend?`,
-                nextNode: 
-                {
-                    npcText: `I'm Boar-d.`,
-                    choices: []
-                },
-                },
-                {
-                text: `I want to eat you...`,
-                nextNode: 
-                {
-                    npcText: `*Oink* I know little goblin but you cannot.`,
-                    choices: []
-                },
-                }   
+              text: `What is friend's name?`,
+              nextNode: 
+              {
+                  npcText: `I'm Boar-d.`,
+                  choices: [
+                    {
+                        text: `Okeh we fight now.`,
+                        nextNode: 
+                        {
+                            npcText: ``,
+                            choices: [
+                              
+                            ]
+                        },
+                        },
+                  ]
+              },
+              },
+
+              // ## MAIN BRANCH
+
+              {
+              text: `I want to eat you...`,
+              nextNode: 
+              {
+                  npcText: `*Oink* I know little goblin but you cannot.`,
+                  choices: [
+                    {
+                        text: ``,
+                        nextNode: 
+                        {
+                            npcText: ``,
+                            choices: []
+                        },
+                        },
+                  ]
+              },
+              }   
             ]
         }
 
@@ -114,18 +147,18 @@ export class TopDown extends Phaser.Scene
         this.currentButtons[i].destroy();
         }
 
-        let yPosition = 50;
+        let yPosition = 75;
 
         for (let i = 0; i < choices.length; i++) {
             const choice = choices[i];
 
-            const button = this.add.text(10, yPosition, choice.text, {
-                fontSize: '14px',
-                color: '#00ff00',
+            const button = this.add.text(this.scale.width / 3.3, yPosition, choice.text, {
+                fontFamily: 'bitPotion',
+                fontSize: '32px',
                 backgroundColor: '#333333',
                 padding: { x: 10, y: 5 },
                 
-            });
+            }).setScrollFactor(0);
 
             button.setInteractive();
 
