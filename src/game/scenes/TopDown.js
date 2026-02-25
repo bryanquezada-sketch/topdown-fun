@@ -69,10 +69,8 @@ export class TopDown extends Phaser.Scene
                         text: `Okeh we fight now.`,
                         nextNode: 
                         {
-                          npcText: ``,
-                          choices: [
-                              
-                          ]
+                          npcText: `I expected as much.`,
+                          choices: []
                         },
                         },
                   ]
@@ -97,7 +95,7 @@ export class TopDown extends Phaser.Scene
                                   text: `...but how will I's know if I's don't try?`,
                                   nextNode: 
                                   {
-                                      npcText: `There are things in this world one just knows.`,
+                                      npcText: `There are things in this world one can just know.`,
                                       choices: [
                                         {
                                             text: `Like hows all birds been swapped for metal flappers by the govern-inment?`,
@@ -116,10 +114,10 @@ export class TopDown extends Phaser.Scene
 
                     // 
                     {
-                        text: `You's right. Too much meat for just one mes! My teeths get tired 'fore I finish the feet!`,
+                        text: `You's right. Too much meat for just one mes! My teeths get tired 'fore I finish the feets!`,
                         nextNode: 
                         {
-                        npcText: `Precisely. *OINK* Return with some friends and then we can discuss things.`,
+                        npcText: `Precisely. *OINK* Return with sufficient friends and maybe then we may re-open this discussion.`,
                         choices: []
                         },
                       },
@@ -129,23 +127,17 @@ export class TopDown extends Phaser.Scene
             ]
         }
 
-        this.npcTextDisplay = this.add.text(this.scale.width / 50, this.scale.height / 1.5, "", {
+        this.npcTextDisplay = this.add.text(this.scale.width / 100, this.scale.height / 1.5, "", {
             fontFamily: 'bitPotion',
             fontSize: '32px',
             color: '#ffffff',
-            wordWrap: { width: 800 }
+            wordWrap: { width: this.scale.width }
         }).setScrollFactor(0);
 
         this.currentButtons = [];
 
-        /* MEMORY
-        this.conversationMemory = {
-            
-        }
-        */
-
+        this.talkedToBoar = false;
         
-
         // #endregion
 
     }
@@ -155,16 +147,11 @@ export class TopDown extends Phaser.Scene
     displayNode(node) {
         let textToShow = node.npcText;
 
-        /* MEMORY
-        if (textToShow === '' && node.choices.length === 0 && this.conversationMemory.XXX) {
-            textToShow = ``;
-        } else if (textToShow === '' && node.choices.length === 0 && this.conversationMemory.XXX) {
-            textToShow = ``;
-        } else if (textToShow === '' && node.choices.length === 0 && this.conversationMemory.XXX) {
-            textToShow = ``;
+        
+        if ((textToShow === `I expected as much.` || textToShow === `We're done here.` || textToShow === `Precisely. *OINK* Return with sufficient friends and maybe then we may re-open this discussion.`) && node.choices.length === 0 && this.talkedToBoar === false) {
+            this.talkedToBoar = true;
         }
-        */
-
+        
         this.npcTextDisplay.setText(textToShow);
 
         this.createChoiceButtons(node.choices);
@@ -184,8 +171,8 @@ export class TopDown extends Phaser.Scene
                 fontFamily: 'bitPotion',
                 fontSize: '32px',
                 backgroundColor: '#333333',
+                wordWrap: { width: 600 },
                 padding: { x: 10, y: 5 },
-                
             }).setScrollFactor(0).setOrigin(0.5);
 
             button.setInteractive();
@@ -211,8 +198,9 @@ export class TopDown extends Phaser.Scene
             });
 
             this.currentButtons.push(button);
+            yPosition += 50;
 
-            yPosition += 40;
+
 
         }
         // #endregion
@@ -262,6 +250,9 @@ export class TopDown extends Phaser.Scene
         }
         
         this.canInteract = false;
+
+
+        //console.log('Talked to boar? ', this.talkedToBoar);
 
     }
 }
