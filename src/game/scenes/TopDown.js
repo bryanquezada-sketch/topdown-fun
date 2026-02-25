@@ -40,6 +40,16 @@ export class TopDown extends Phaser.Scene
 
         this.facing = new Phaser.Math.Vector2(0, 1);
 
+
+        this.events.on('dialogueIsActive', () => {
+            this.input.keyboard.enabled = false;
+        });
+
+        this.events.on('dialogueIsInactive', () => {
+            this.input.keyboard.enabled = true;
+        });
+
+
         // #endregion
         
         /* STICK THIS INSIDE CHOICE []
@@ -145,11 +155,13 @@ export class TopDown extends Phaser.Scene
         // #region DIALOGUE LOGIC & VISUALS
 
     displayNode(node) {
+
         let textToShow = node.npcText;
 
         
         if ((textToShow === `I expected as much.` || textToShow === `We're done here.` || textToShow === `Precisely. *OINK* Return with sufficient friends and maybe then we may re-open this discussion.`) && node.choices.length === 0 && this.talkedToBoar === false) {
             this.talkedToBoar = true;
+            this.events.emit('dialogueIsInactive')
         }
         
         this.npcTextDisplay.setText(textToShow);
@@ -178,20 +190,6 @@ export class TopDown extends Phaser.Scene
             button.setInteractive();
 
             button.on('pointerdown', () => {
-
-                /* MEMORY
-                if (choice.text === "") {
-                    this.conversationMemory.XXX = true;
-                } else {
-                    this.conversationMemory.XXX = true;
-                }
-
-                if (choice.text === "") {
-                    this.conversationMemory.XXX = true;
-                } else {
-                    this.conversationMemory.XXX = true;
-                }
-                */
 
                 this.displayNode(choice.nextNode);
                 
@@ -247,6 +245,7 @@ export class TopDown extends Phaser.Scene
 
         if (this.canInteract && Phaser.Input.Keyboard.JustDown(this.eKey)) {
             this.displayNode(this.conversation);
+            this.events.emit('dialogueIsActive')
         }
         
         this.canInteract = false;
