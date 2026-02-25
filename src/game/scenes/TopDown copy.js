@@ -41,18 +41,7 @@ export class TopDown extends Phaser.Scene
         this.facing = new Phaser.Math.Vector2(0, 1);
 
         // #endregion
-        
-        /* STICK THIS INSIDE CHOICE []
-          {
-            text: ``,
-            nextNode: 
-            {
-            npcText: ``,
-            choices: []
-            },
-          },
-        */
-
+       
         // #region DIALOGUE
 
         this.conversation = 
@@ -138,14 +127,6 @@ export class TopDown extends Phaser.Scene
 
         this.currentButtons = [];
 
-        /* MEMORY
-        this.conversationMemory = {
-            
-        }
-        */
-
-        
-
         // #endregion
 
     }
@@ -154,16 +135,6 @@ export class TopDown extends Phaser.Scene
 
     displayNode(node) {
         let textToShow = node.npcText;
-
-        /* MEMORY
-        if (textToShow === '' && node.choices.length === 0 && this.conversationMemory.XXX) {
-            textToShow = ``;
-        } else if (textToShow === '' && node.choices.length === 0 && this.conversationMemory.XXX) {
-            textToShow = ``;
-        } else if (textToShow === '' && node.choices.length === 0 && this.conversationMemory.XXX) {
-            textToShow = ``;
-        }
-        */
 
         this.npcTextDisplay.setText(textToShow);
 
@@ -191,20 +162,6 @@ export class TopDown extends Phaser.Scene
             button.setInteractive();
 
             button.on('pointerdown', () => {
-
-                /* MEMORY
-                if (choice.text === "") {
-                    this.conversationMemory.XXX = true;
-                } else {
-                    this.conversationMemory.XXX = true;
-                }
-
-                if (choice.text === "") {
-                    this.conversationMemory.XXX = true;
-                } else {
-                    this.conversationMemory.XXX = true;
-                }
-                */
 
                 this.displayNode(choice.nextNode);
                 
